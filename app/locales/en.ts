@@ -9,7 +9,7 @@ const en: LocaleType = {
   WIP: "Coming Soon...",
   Error: {
     Unauthorized: isApp
-      ? `😆 Oops, there's an issue.
+     `😆 Oops, there's an issue.
      `
   },
   Auth: {
