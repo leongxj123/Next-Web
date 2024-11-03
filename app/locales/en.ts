@@ -9,8 +9,13 @@ const en: LocaleType = {
   WIP: "Coming Soon...",
   Error: {
     Unauthorized: isApp
-     `😆 Oops, there's an issue.
-     `
+      ? `😆 开启流程:
+    \\ 1️⃣ 点击确认
+    \\ 2️⃣ 开始对话
+      : `😆 开启流程:
+    \ 1️⃣ 点击确认
+    \ 2️⃣开始对话
+ `,
   },
   Auth: {
     Return: "Return",
