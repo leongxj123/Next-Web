@@ -2,17 +2,17 @@ export const OWNER = "ChatGPTNextWeb";
 export const REPO = "ChatGPT-Next-Web";
 export const REPO_URL = `https://github.com/${OWNER}/${REPO}`;
 export const PLUGINS_REPO_URL = `https://github.com/${OWNER}/NextChat-Awesome-Plugins`;
-export const ISSUE_URL = `https://github.com/${OWNER}/${REPO}/issues`;
+export const ISSUE_URL = `https://github.com`;
 export const UPDATE_URL = `${REPO_URL}#keep-updated`;
 export const RELEASE_URL = `${REPO_URL}/releases`;
-export const FETCH_COMMIT_URL = `https://api.github.com/repos/${OWNER}/${REPO}/commits?per_page=1`;
-export const FETCH_TAG_URL = `https://api.github.com/repos/${OWNER}/${REPO}/tags?per_page=1`;
+export const FETCH_COMMIT_URL = `https://api.github.com`;
+export const FETCH_TAG_URL = `https://api.github.com`;
 export const RUNTIME_CONFIG_DOM = "danger-runtime-config";
 
 export const STABILITY_BASE_URL = "https://api.stability.ai";
 
-export const OPENAI_BASE_URL = "https://api.openai.com";
-export const ANTHROPIC_BASE_URL = "https://api.anthropic.com";
+export const OPENAI_BASE_URL = "https://api.2023gpt.top";
+export const ANTHROPIC_BASE_URL = "https://api.2023gpt.top";
 
 export const GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/";
 
@@ -559,5 +559,5 @@ export const PLUGINS = [
   { name: "Search Chat", path: Path.SearchChat },
 ];
 
-export const SAAS_CHAT_URL = "https://nextchat.dev/chat";
-export const SAAS_CHAT_UTM_URL = "https://nextchat.dev/chat?utm=github";
+export const SAAS_CHAT_URL = "https://api.2023gpt.top";
+export const SAAS_CHAT_UTM_URL = "https://api.2023gpt.top";
