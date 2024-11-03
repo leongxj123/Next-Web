@@ -10,7 +10,7 @@ const en: LocaleType = {
   Error: {
     Unauthorized: isApp
       ? `😆 Oops, there's an issue.
-     `,
+     `
   },
   Auth: {
     Return: "Return",
