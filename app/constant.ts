@@ -108,6 +108,7 @@ export const EXPORT_MESSAGE_CLASS_NAME = "export-markdown";
 export enum ServiceProvider {
   Tencent = "Tencent",
   ChatGLM = "ChatGLM",
+  Alibaba = "Alibaba",
 }
 
 // Google API safety settings, see https://ai.google.dev/gemini-api/docs/safety-settings
