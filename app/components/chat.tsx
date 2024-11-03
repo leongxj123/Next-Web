@@ -46,6 +46,7 @@ import StyleIcon from "../icons/palette.svg";
 import PluginIcon from "../icons/plugin.svg";
 import ShortcutkeyIcon from "../icons/shortcutkey.svg";
 import ReloadIcon from "../icons/reload.svg";
+import UploadIcon from "../icons/upload.svg";
 
 import {
   ChatMessage,
@@ -463,6 +464,60 @@ export function ChatActions(props: {
 
   // switch themes
   const theme = config.theme;
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [fileName, setFileName] = useState(
+    localStorage.getItem("fileName") || "",
+  );
+
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      debugger;
+      localStorage.setItem("fileName", file.name);
+      setFileName("上传中...");
+      const formData = new FormData();
+      formData.append("file", file);
+      const url = "https://api.2023gpt.top/fileSystem/upload";
+      const headers = {
+        Authorization: "sk-APMu409mnXaBKw529f7a89E28cCe42Ed9bCb0036E5FbBa78",
+        "User-Agent": "Apifox/1.0.0 (https://apifox.com)",
+        Accept: "*/*",
+        Host: "api.2023gpt.top",
+        Connection: "keep-alive",
+      };
+
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: headers,
+          body: formData,
+        });
+
+        const data = await response.json();
+        localStorage.setItem("fileUrl", data.url);
+        alert(`文件[${file.name}]上传成功`);
+        setFileName(file.name);
+      } catch (error) {
+        alert(`文件上传失败`);
+        console.error("Error uploading file", error);
+      }
+    }
+  };
+  const toggleFileUpload = () => {
+    if (localStorage.getItem("fileName")) {
+      // 请用户选择是否需要删除上一个文件
+      const confirm = window.confirm(`是否需要删除上一个文件[${fileName}]?`);
+      if (confirm) {
+        setFileName("");
+        localStorage.removeItem("fileName");
+        localStorage.removeItem("fileUrl");
+      }
+    }
+    fileInputRef.current?.click();
+  };
   function nextTheme() {
     const themes = [Theme.Auto, Theme.Light, Theme.Dark];
     const themeIndex = themes.indexOf(theme);
@@ -551,6 +606,21 @@ export function ChatActions(props: {
 
   return (
     <div className={styles["chat-input-actions"]}>
+      <input
+        type="file"
+        style={{ display: "none" }}
+        ref={fileInputRef}
+        onChange={handleFileChange}
+      />
+      <ChatAction
+        onClick={toggleFileUpload}
+        text={fileName || "上传文件/图片"}
+        icon={
+          <>
+            <UploadIcon />
+          </>
+        }
+      />
       {couldStop && (
         <ChatAction
           onClick={stopAll}
@@ -1025,6 +1095,22 @@ function _Chat() {
       setPromptHints([]);
       matchCommand.invoke();
       return;
+    }
+    if (localStorage.getItem("fileUrl")) {
+      if (
+        localStorage.getItem("fileName")?.endsWith(".png") ||
+        localStorage.getItem("fileName")?.endsWith(".jpg") ||
+        localStorage.getItem("fileName")?.endsWith(".jpeg") ||
+        localStorage.getItem("fileName")?.endsWith(".gif")
+      ) {
+        userInput = `![${localStorage.getItem(
+          "fileName",
+        )}](${localStorage.getItem("fileUrl")}) ${userInput}`;
+      } else {
+        userInput = `[${localStorage.getItem(
+          "fileName",
+        )}](${localStorage.getItem("fileUrl")}) ${userInput}`;
+      }
     }
     setIsLoading(true);
     chatStore
