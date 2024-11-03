@@ -106,9 +106,19 @@ export const REQUEST_TIMEOUT_MS = 60000;
 export const EXPORT_MESSAGE_CLASS_NAME = "export-markdown";
 
 export enum ServiceProvider {
-  Tencent = "Tencent",
-  ChatGLM = "ChatGLM",
+  OpenAI = "OpenAI",
+  Azure = "Azure",
+  Google = "Google",
+  Anthropic = "Anthropic",
+  Baidu = "Baidu",
+  ByteDance = "ByteDance",
   Alibaba = "Alibaba",
+  Tencent = "Tencent",
+  Moonshot = "Moonshot",
+  Stability = "Stability",
+  Iflytek = "Iflytek",
+  XAI = "XAI",
+  ChatGLM = "ChatGLM",
 }
 
 // Google API safety settings, see https://ai.google.dev/gemini-api/docs/safety-settings
