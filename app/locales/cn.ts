@@ -8,7 +8,7 @@ const cn = {
   WIP: "该功能仍在开发中……",
   Error: {
     Unauthorized: isApp
-      ? `😆 对话流程
+       `😆 对话流程
        \ 1️⃣ 点击确认
        \ 2️⃣ 开始对话
        `,
