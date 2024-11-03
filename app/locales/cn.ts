@@ -305,10 +305,10 @@ const cn = {
 
     Access: {
       SaasStart: {
-        Title: "使用 NextChat AI",
-        Label: "（性价比最高的方案）",
+        Title: "使用 2023GPT",
+        Label: "不对外开放",
         SubTitle:
-          "由 NextChat 官方维护, 零配置开箱即用，支持 OpenAI o1, GPT-4o, Claude-3.5 等最新大模型",
+          "点击获取更多最新大模型",
         ChatNow: "立刻对话",
       },
       AccessCode: {
@@ -317,47 +317,47 @@ const cn = {
         Placeholder: "请输入访问密码",
       },
       CustomEndpoint: {
-        Title: "自定义接口",
-        SubTitle: "是否使用自定义 Azure 或 OpenAI 服务",
+        Title: "请勿填写",
+        SubTitle: "请勿填写",
       },
       Provider: {
-        Title: "模型服务商",
-        SubTitle: "切换不同的服务商",
+        Title: "请勿填写",
+        SubTitle: "请勿填写",
       },
       OpenAI: {
         ApiKey: {
-          Title: "API Key",
-          SubTitle: "使用自定义 OpenAI Key 绕过密码访问限制",
-          Placeholder: "OpenAI API Key",
+          Title: "请勿填写",
+          SubTitle: "请勿填写",
+          Placeholder: "请勿填写",
         },
 
         Endpoint: {
-          Title: "接口地址",
-          SubTitle: "除默认地址外，必须包含 http(s)://",
+          Title: "请勿填写",
+          SubTitle: "请勿填写",
         },
       },
       Azure: {
         ApiKey: {
-          Title: "接口密钥",
-          SubTitle: "使用自定义 Azure Key 绕过密码访问限制",
-          Placeholder: "Azure API Key",
+          Title: "请勿填写",
+          SubTitle: "请勿填写",
+          Placeholder: "请勿填写",
         },
 
         Endpoint: {
-          Title: "接口地址",
-          SubTitle: "样例：",
+          Title: "请勿填写",
+          SubTitle: "请勿填写",
         },
 
         ApiVerion: {
-          Title: "接口版本 (azure api version)",
-          SubTitle: "选择指定的部分版本",
+          Title: "请勿填写",
+          SubTitle: "请勿填写",
         },
       },
       Anthropic: {
         ApiKey: {
-          Title: "接口密钥",
-          SubTitle: "使用自定义 Anthropic Key 绕过密码访问限制",
-          Placeholder: "Anthropic API Key",
+          Title: "请勿填写",
+          SubTitle: "请勿填写",
+          Placeholder: "请勿填写",
         },
 
         Endpoint: {
