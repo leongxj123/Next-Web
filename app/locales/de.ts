@@ -1,610 +1,798 @@
-import { SubmitKey } from "../store/config";
-import type { PartialLocaleType } from "./index";
 import { getClientConfig } from "../config/client";
+import { SubmitKey } from "../store/config";
 import { SAAS_CHAT_UTM_URL } from "@/app/constant";
+
 const isApp = !!getClientConfig()?.isApp;
 
-const de: PartialLocaleType = {
-  WIP: "In Bearbeitung...",
+const cn = {
+  WIP: "该功能仍在开发中……",
   Error: {
     Unauthorized: isApp
-      ? `😆 Das Gespräch hatte einige Probleme, keine Sorge:
-    \\ 1️⃣ Wenn du ohne Konfiguration sofort starten möchtest, [klicke hier, um sofort zu chatten 🚀](${SAAS_CHAT_UTM_URL})
-    \\ 2️⃣ Wenn du deine eigenen OpenAI-Ressourcen verwenden möchtest, klicke [hier](/#/settings), um die Einstellungen zu ändern ⚙️`
-      : `😆 Das Gespräch hatte einige Probleme, keine Sorge:
-    \ 1️⃣ Wenn du ohne Konfiguration sofort starten möchtest, [klicke hier, um sofort zu chatten 🚀](${SAAS_CHAT_UTM_URL})
-    \ 2️⃣ Wenn du eine private Bereitstellung verwendest, klicke [hier](/#/auth), um den Zugriffsschlüssel einzugeben 🔑
-    \ 3️⃣ Wenn du deine eigenen OpenAI-Ressourcen verwenden möchtest, klicke [hier](/#/settings), um die Einstellungen zu ändern ⚙️
- `,
+      ? `开启流程:\n 1️⃣ 点击确认\n 2️⃣ 开始对话`
+      : `开启流程:\n 1️⃣ 点击确认\n 2️⃣ 开始对话`, 
   },
   Auth: {
-    Title: "Passwort erforderlich",
-    Tips: "Der Administrator hat die Passwortüberprüfung aktiviert. Bitte geben Sie den Zugangscode unten ein.",
-    SubTips: "Oder geben Sie Ihren OpenAI oder Google API-Schlüssel ein.",
-    Input: "Geben Sie hier den Zugangscode ein",
-    Confirm: "Bestätigen",
-    Later: "Später",
-    Return: "Zurück",
-    SaasTips:
-      "Die Konfiguration ist zu kompliziert, ich möchte es sofort nutzen",
+    Return: "返回",
+    Title: "需要密码",
+    Tips: "管理员开启了密码验证，请在下方填入访问码",
+    SubTips: "或者输入你的密钥",
+    Input: "在此处填写访问码",
+    Confirm: "确认",
+    Later: "稍后再说",
+    SaasTips: "更多功能",
     TopTips:
-      "🥳 NextChat AI Einführungsangebot, schalte jetzt OpenAI o1, GPT-4o, Claude-3.5 und die neuesten großen Modelle frei",
+      "点击获取更多最新大模型",
   },
   ChatItem: {
-    ChatItemCount: (count: number) => `${count} Gespräche`,
+    ChatItemCount: (count: number) => `${count} 条对话`,
   },
   Chat: {
-    SubTitle: (count: number) => `Insgesamt ${count} Gespräche`,
+    SubTitle: (count: number) => `共 ${count} 条对话`,
     EditMessage: {
-      Title: "Nachricht bearbeiten",
+      Title: "编辑消息记录",
       Topic: {
-        Title: "Chat-Thema",
-        SubTitle: "Ändern Sie das aktuelle Chat-Thema",
+        Title: "聊天主题",
+        SubTitle: "更改当前聊天主题",
       },
     },
     Actions: {
-      ChatList: "Nachrichtliste anzeigen",
-      CompressedHistory: "Komprimierte Historie anzeigen",
-      Export: "Chatverlauf exportieren",
-      Copy: "Kopieren",
-      Stop: "Stoppen",
-      Retry: "Erneut versuchen",
-      Pin: "Anheften",
-      PinToastContent: "1 Gespräch an den voreingestellten Prompt angeheftet",
-      PinToastAction: "Ansehen",
-      Delete: "Löschen",
-      Edit: "Bearbeiten",
-      RefreshTitle: "Titel aktualisieren",
-      RefreshToast: "Anfrage zur Titelaktualisierung gesendet",
+      ChatList: "查看消息列表",
+      CompressedHistory: "查看压缩后的历史 Prompt",
+      Export: "导出聊天记录",
+      Copy: "复制",
+      Stop: "停止",
+      Retry: "重试",
+      Pin: "固定",
+      PinToastContent: "已将 1 条对话固定至预设提示词",
+      PinToastAction: "查看",
+      Delete: "删除",
+      Edit: "编辑",
+      FullScreen: "全屏",
+      RefreshTitle: "刷新标题",
+      RefreshToast: "已发送刷新标题请求",
+      Speech: "朗读",
+      StopSpeech: "停止",
     },
     Commands: {
-      new: "Neues Gespräch",
-      newm: "Neues Gespräch aus Maske erstellen",
-      next: "Nächstes Gespräch",
-      prev: "Vorheriges Gespräch",
-      clear: "Kontext löschen",
-      del: "Gespräch löschen",
+      new: "新建聊天",
+      newm: "从面具新建聊天",
+      next: "下一个聊天",
+      prev: "上一个聊天",
+      clear: "清除上下文",
+      fork: "复制聊天",
+      del: "删除聊天",
     },
     InputActions: {
-      Stop: "Antwort stoppen",
-      ToBottom: "Zum neuesten Beitrag",
+      Stop: "停止响应",
+      ToBottom: "滚到最新",
       Theme: {
-        auto: "Automatisches Thema",
-        light: "Helles Thema",
-        dark: "Dunkles Thema",
+        auto: "自动主题",
+        light: "亮色模式",
+        dark: "深色模式",
       },
-      Prompt: "Schnellbefehle",
-      Masks: "Alle Masken",
-      Clear: "Chat löschen",
-      Settings: "Gesprächseinstellungen",
-      UploadImage: "Bild hochladen",
+      Prompt: "快捷指令",
+      Masks: "所有面具",
+      Clear: "清除聊天",
+      Settings: "对话设置",
+      UploadImage: "上传图片",
     },
-    Rename: "Gespräch umbenennen",
-    Typing: "Tippt…",
+    Rename: "重命名对话",
+    Typing: "正在输入…",
     Input: (submitKey: string) => {
-      var inputHints = `${submitKey} senden`;
+      var inputHints = `${submitKey} 发送`;
       if (submitKey === String(SubmitKey.Enter)) {
-        inputHints += "，Shift + Enter für Zeilenumbruch";
+        inputHints += "，Shift + Enter 换行";
       }
-      return inputHints + "，/ für Autovervollständigung, : für Befehle";
+      return inputHints + "，/ 触发补全，: 触发命令";
     },
-    Send: "Senden",
+    Send: "发送",
+    StartSpeak: "说话",
+    StopSpeak: "停止",
     Config: {
-      Reset: "Erinnerung löschen",
-      SaveAs: "Als Maske speichern",
+      Reset: "清除记忆",
+      SaveAs: "存为面具",
     },
-    IsContext: "Voreingestellter Prompt",
+    IsContext: "预设提示词",
+    ShortcutKey: {
+      Title: "键盘快捷方式",
+      newChat: "打开新聊天",
+      focusInput: "聚焦输入框",
+      copyLastMessage: "复制最后一个回复",
+      copyLastCode: "复制最后一个代码块",
+      showShortcutKey: "显示快捷方式",
+    },
   },
   Export: {
-    Title: "Chatverlauf teilen",
-    Copy: "Alles kopieren",
-    Download: "Datei herunterladen",
-    Share: "Auf ShareGPT teilen",
-    MessageFromYou: "Benutzer",
+    Title: "分享聊天记录",
+    Copy: "全部复制",
+    Download: "下载文件",
+    Share: "分享到 ShareGPT",
+    MessageFromYou: "用户",
     MessageFromChatGPT: "ChatGPT",
     Format: {
-      Title: "Exportformat",
-      SubTitle: "Kann als Markdown-Text oder PNG-Bild exportiert werden",
+      Title: "导出格式",
+      SubTitle: "可以导出 Markdown 文本或者 PNG 图片",
     },
     IncludeContext: {
-      Title: "Maske Kontext einbeziehen",
-      SubTitle: "Soll der Maskenkontext in den Nachrichten angezeigt werden?",
+      Title: "包含面具上下文",
+      SubTitle: "是否在消息中展示面具上下文",
     },
     Steps: {
-      Select: "Auswählen",
-      Preview: "Vorschau",
+      Select: "选取",
+      Preview: "预览",
     },
     Image: {
-      Toast: "Screenshot wird erstellt",
-      Modal: "Lang drücken oder Rechtsklick, um Bild zu speichern",
+      Toast: "正在生成截图",
+      Modal: "长按或右键保存图片",
+    },
+    Artifacts: {
+      Title: "分享页面",
+      Error: "分享失败",
     },
   },
   Select: {
-    Search: "Nachrichten suchen",
-    All: "Alles auswählen",
-    Latest: "Neueste",
-    Clear: "Auswahl aufheben",
+    Search: "搜索消息",
+    All: "选取全部",
+    Latest: "最近几条",
+    Clear: "清除选中",
   },
   Memory: {
-    Title: "Historische Zusammenfassung",
-    EmptyContent:
-      "Gesprächsinhalte sind zu kurz, keine Zusammenfassung erforderlich",
-    Send: "Chatverlauf automatisch komprimieren und als Kontext senden",
-    Copy: "Zusammenfassung kopieren",
-    Reset: "[nicht verwendet]",
-    ResetConfirm: "Zusammenfassung löschen bestätigen?",
+    Title: "历史摘要",
+    EmptyContent: "对话内容过短，无需总结",
+    Send: "自动压缩聊天记录并作为上下文发送",
+    Copy: "复制摘要",
+    Reset: "[unused]",
+    ResetConfirm: "确认清空历史摘要？",
   },
   Home: {
-    NewChat: "Neues Gespräch",
-    DeleteChat: "Bestätigen Sie das Löschen des ausgewählten Gesprächs?",
-    DeleteToast: "Gespräch gelöscht",
-    Revert: "Rückgängig machen",
+    NewChat: "新的聊天",
+    DeleteChat: "确认删除选中的对话？",
+    DeleteToast: "已删除会话",
+    Revert: "撤销",
   },
   Settings: {
-    Title: "Einstellungen",
-    SubTitle: "Alle Einstellungsmöglichkeiten",
+    Title: "设置",
+    SubTitle: "所有设置选项",
+    ShowPassword: "显示密码",
 
     Danger: {
       Reset: {
-        Title: "Alle Einstellungen zurücksetzen",
-        SubTitle: "Setzt alle Einstellungen auf die Standardwerte zurück",
-        Action: "Jetzt zurücksetzen",
-        Confirm: "Bestätigen Sie das Zurücksetzen aller Einstellungen?",
+        Title: "重置所有设置",
+        SubTitle: "重置所有设置项回默认值",
+        Action: "立即重置",
+        Confirm: "确认重置所有设置？",
       },
       Clear: {
-        Title: "Alle Daten löschen",
-        SubTitle: "Löscht alle Chats und Einstellungsdaten",
-        Action: "Jetzt löschen",
-        Confirm:
-          "Bestätigen Sie das Löschen aller Chats und Einstellungsdaten?",
+        Title: "清除所有数据",
+        SubTitle: "清除所有聊天、设置数据",
+        Action: "立即清除",
+        Confirm: "确认清除所有聊天、设置数据？",
       },
     },
     Lang: {
-      Name: "Sprache", // ACHTUNG: Wenn Sie eine neue Übersetzung hinzufügen möchten, übersetzen Sie diesen Wert bitte nicht, lassen Sie ihn als `Sprache`
-      All: "Alle Sprachen",
+      Name: "Language", // ATTENTION: if you wanna add a new translation, please do not translate this value, leave it as `Language`
+      All: "所有语言",
     },
-    Avatar: "Avatar",
+    Avatar: "头像",
     FontSize: {
-      Title: "Schriftgröße",
-      SubTitle: "Schriftgröße des Chat-Inhalts",
+      Title: "字体大小",
+      SubTitle: "聊天内容的字体大小",
     },
     FontFamily: {
-      Title: "Chat-Schriftart",
-      SubTitle:
-        "Schriftart des Chat-Inhalts, leer lassen, um die globale Standardschriftart anzuwenden",
-      Placeholder: "Schriftartname",
+      Title: "聊天字体",
+      SubTitle: "聊天内容的字体，若置空则应用全局默认字体",
+      Placeholder: "字体名称",
     },
     InjectSystemPrompts: {
-      Title: "Systemweite Eingabeaufforderungen einfügen",
-      SubTitle:
-        "Fügt jeder Nachricht am Anfang der Nachrichtenliste eine simulierte ChatGPT-Systemaufforderung hinzu",
+      Title: "注入系统级提示信息",
+      SubTitle: "强制给每次请求的消息列表开头添加一个模拟 ChatGPT 的系统提示",
     },
     InputTemplate: {
-      Title: "Benutzer-Eingabeverarbeitung",
-      SubTitle:
-        "Die neueste Nachricht des Benutzers wird in diese Vorlage eingefügt",
+      Title: "用户输入预处理",
+      SubTitle: "用户最新的一条消息会填充到此模板",
     },
 
     Update: {
-      Version: (x: string) => `Aktuelle Version: ${x}`,
-      IsLatest: "Bereits die neueste Version",
-      CheckUpdate: "Auf Updates überprüfen",
-      IsChecking: "Überprüfe auf Updates...",
-      FoundUpdate: (x: string) => `Neue Version gefunden: ${x}`,
-      GoToUpdate: "Zum Update gehen",
+      Version: (x: string) => `当前版本：${x}`,
+      IsLatest: "已是最新版本",
+      CheckUpdate: "检查更新",
+      IsChecking: "正在检查更新...",
+      FoundUpdate: (x: string) => `发现新版本：${x}`,
+      GoToUpdate: "前往更新",
+      Success: "更新成功！",
+      Failed: "更新失败",
     },
-    SendKey: "Sende-Taste",
-    Theme: "Thema",
-    TightBorder: "Randloser Modus",
+    SendKey: "发送键",
+    Theme: "主题",
+    TightBorder: "无边框模式",
     SendPreviewBubble: {
-      Title: "Vorschau-Bubble",
-      SubTitle: "Markdown-Inhalt in der Vorschau-Bubble anzeigen",
+      Title: "预览气泡",
+      SubTitle: "在预览气泡中预览 Markdown 内容",
     },
     AutoGenerateTitle: {
-      Title: "Titel automatisch generieren",
-      SubTitle:
-        "Basierend auf dem Chat-Inhalt einen passenden Titel generieren",
+      Title: "自动生成标题",
+      SubTitle: "根据对话内容生成合适的标题",
     },
     Sync: {
-      CloudState: "Cloud-Daten",
-      NotSyncYet: "Noch nicht synchronisiert",
-      Success: "Synchronisation erfolgreich",
-      Fail: "Synchronisation fehlgeschlagen",
+      CloudState: "云端数据",
+      NotSyncYet: "还没有进行过同步",
+      Success: "同步成功",
+      Fail: "同步失败",
 
       Config: {
         Modal: {
-          Title: "Cloud-Synchronisation konfigurieren",
-          Check: "Verfügbarkeit überprüfen",
+          Title: "配置云同步",
+          Check: "检查可用性",
         },
         SyncType: {
-          Title: "Synchronisationstyp",
-          SubTitle: "Wählen Sie den bevorzugten Synchronisationsserver aus",
+          Title: "同步类型",
+          SubTitle: "选择喜爱的同步服务器",
         },
         Proxy: {
-          Title: "Proxy aktivieren",
-          SubTitle:
-            "Beim Synchronisieren im Browser muss ein Proxy aktiviert werden, um Cross-Origin-Beschränkungen zu vermeiden",
+          Title: "启用代理",
+          SubTitle: "在浏览器中同步时，必须启用代理以避免跨域限制",
         },
         ProxyUrl: {
-          Title: "Proxy-Adresse",
-          SubTitle: "Nur für projektinterne Cross-Origin-Proxy",
+          Title: "代理地址",
+          SubTitle: "仅适用于本项目自带的跨域代理",
         },
 
         WebDav: {
-          Endpoint: "WebDAV-Adresse",
-          UserName: "Benutzername",
-          Password: "Passwort",
+          Endpoint: "WebDAV 地址",
+          UserName: "用户名",
+          Password: "密码",
         },
 
         UpStash: {
-          Endpoint: "UpStash Redis REST-Url",
-          UserName: "Sicherungsname",
-          Password: "UpStash Redis REST-Token",
+          Endpoint: "UpStash Redis REST Url",
+          UserName: "备份名称",
+          Password: "UpStash Redis REST Token",
         },
       },
 
-      LocalState: "Lokale Daten",
+      LocalState: "本地数据",
       Overview: (overview: any) => {
-        return `${overview.chat} Chats, ${overview.message} Nachrichten, ${overview.prompt} Eingabeaufforderungen, ${overview.mask} Masken`;
+        return `${overview.chat} 次对话，${overview.message} 条消息，${overview.prompt} 条提示词，${overview.mask} 个面具`;
       },
-      ImportFailed: "Import fehlgeschlagen",
+      ImportFailed: "导入失败",
     },
     Mask: {
       Splash: {
-        Title: "Masken-Startseite",
-        SubTitle:
-          "Zeige die Masken-Startseite beim Erstellen eines neuen Chats",
+        Title: "面具启动页",
+        SubTitle: "新建聊天时，展示面具启动页",
       },
       Builtin: {
-        Title: "Eingebaute Masken ausblenden",
-        SubTitle: "Blendet eingebaute Masken in allen Maskenlisten aus",
+        Title: "隐藏内置面具",
+        SubTitle: "在所有面具列表中隐藏内置面具",
       },
     },
     Prompt: {
       Disable: {
-        Title: "Automatische Eingabeaufforderung deaktivieren",
-        SubTitle:
-          "Geben Sie am Anfang des Eingabefelds / ein, um die automatische Vervollständigung auszulösen",
+        Title: "禁用提示词自动补全",
+        SubTitle: "在输入框开头输入 / 即可触发自动补全",
       },
-      List: "Benutzerdefinierte Eingabeaufforderungsliste",
+      List: "自定义提示词列表",
       ListCount: (builtin: number, custom: number) =>
-        `Eingebaut ${builtin} Stück, Benutzerdefiniert ${custom} Stück`,
-      Edit: "Bearbeiten",
+        `内置 ${builtin} 条，用户定义 ${custom} 条`,
+      Edit: "编辑",
       Modal: {
-        Title: "Eingabeaufforderungsliste",
-        Add: "Neu erstellen",
-        Search: "Eingabeaufforderungen suchen",
+        Title: "提示词列表",
+        Add: "新建",
+        Search: "搜索提示词",
       },
       EditModal: {
-        Title: "Eingabeaufforderung bearbeiten",
+        Title: "编辑提示词",
       },
     },
     HistoryCount: {
-      Title: "Anzahl der historischen Nachrichten",
-      SubTitle:
-        "Anzahl der historischen Nachrichten, die bei jeder Anfrage mitgesendet werden",
+      Title: "附带历史消息数",
+      SubTitle: "每次请求携带的历史消息数",
     },
     CompressThreshold: {
-      Title: "Komprimierungsschwelle für historische Nachrichtenlänge",
-      SubTitle:
-        "Wenn die unkomprimierten historischen Nachrichten diesen Wert überschreiten, wird komprimiert",
+      Title: "历史消息长度压缩阈值",
+      SubTitle: "当未压缩的历史消息超过该值时，将进行压缩",
     },
 
     Usage: {
-      Title: "Guthabenabfrage",
+      Title: "余额查询",
       SubTitle(used: any, total: any) {
-        return `In diesem Monat verwendet $${used}, Abonnement insgesamt $${total}`;
+        return `本月已使用 $${used}，订阅总额 $${total}`;
       },
-      IsChecking: "Wird überprüft…",
-      Check: "Erneut überprüfen",
-      NoAccess:
-        "Geben Sie API-Schlüssel oder Zugangspasswort ein, um das Guthaben einzusehen",
+      IsChecking: "正在检查…",
+      Check: "重新检查",
+      NoAccess: "输入 API Key 或访问密码查看余额",
     },
 
     Access: {
       SaasStart: {
-        Title: "NextChat AI verwenden",
-        Label: "(Die kosteneffektivste Lösung)",
+        Title: "使用 NextChat AI",
+        Label: "（性价比最高的方案）",
         SubTitle:
-          "Offiziell von NextChat verwaltet, sofort einsatzbereit ohne Konfiguration, unterstützt die neuesten großen Modelle wie OpenAI o1, GPT-4o und Claude-3.5",
-        ChatNow: "Jetzt chatten",
+          "由 NextChat 官方维护, 零配置开箱即用，支持 OpenAI o1, GPT-4o, Claude-3.5 等最新大模型",
+        ChatNow: "立刻对话",
       },
-
       AccessCode: {
-        Title: "Zugangscode",
-        SubTitle:
-          "Der Administrator hat die verschlüsselte Zugriffskontrolle aktiviert",
-        Placeholder: "Geben Sie den Zugangscode ein",
+        Title: "访问密码",
+        SubTitle: "管理员已开启加密访问",
+        Placeholder: "请输入访问密码",
       },
       CustomEndpoint: {
-        Title: "Benutzerdefinierte Schnittstelle",
-        SubTitle: "Benutzerdefinierte Azure- oder OpenAI-Dienste verwenden",
+        Title: "自定义接口",
+        SubTitle: "是否使用自定义 Azure 或 OpenAI 服务",
       },
       Provider: {
-        Title: "Modellanbieter",
-        SubTitle: "Wechseln Sie zu verschiedenen Anbietern",
+        Title: "模型服务商",
+        SubTitle: "切换不同的服务商",
       },
       OpenAI: {
         ApiKey: {
-          Title: "API-Schlüssel",
-          SubTitle:
-            "Verwenden Sie benutzerdefinierten OpenAI-Schlüssel, um Passwortzugangsbeschränkungen zu umgehen",
-          Placeholder: "OpenAI API-Schlüssel",
+          Title: "API Key",
+          SubTitle: "使用自定义 OpenAI Key 绕过密码访问限制",
+          Placeholder: "OpenAI API Key",
         },
 
         Endpoint: {
-          Title: "Schnittstellenadresse",
-          SubTitle: "Neben der Standardadresse muss http(s):// enthalten sein",
+          Title: "接口地址",
+          SubTitle: "除默认地址外，必须包含 http(s)://",
         },
       },
       Azure: {
         ApiKey: {
-          Title: "Schnittstellenschlüssel",
-          SubTitle:
-            "Verwenden Sie benutzerdefinierten Azure-Schlüssel, um Passwortzugangsbeschränkungen zu umgehen",
-          Placeholder: "Azure API-Schlüssel",
+          Title: "接口密钥",
+          SubTitle: "使用自定义 Azure Key 绕过密码访问限制",
+          Placeholder: "Azure API Key",
         },
 
         Endpoint: {
-          Title: "Schnittstellenadresse",
-          SubTitle: "Beispiel:",
+          Title: "接口地址",
+          SubTitle: "样例：",
         },
 
         ApiVerion: {
-          Title: "Schnittstellenversion (azure api version)",
-          SubTitle: "Wählen Sie eine spezifische Teilversion aus",
+          Title: "接口版本 (azure api version)",
+          SubTitle: "选择指定的部分版本",
         },
       },
       Anthropic: {
         ApiKey: {
-          Title: "Schnittstellenschlüssel",
-          SubTitle:
-            "Verwenden Sie benutzerdefinierten Anthropic-Schlüssel, um Passwortzugangsbeschränkungen zu umgehen",
-          Placeholder: "Anthropic API-Schlüssel",
+          Title: "接口密钥",
+          SubTitle: "使用自定义 Anthropic Key 绕过密码访问限制",
+          Placeholder: "Anthropic API Key",
         },
 
         Endpoint: {
-          Title: "Schnittstellenadresse",
-          SubTitle: "Beispiel:",
+          Title: "接口地址",
+          SubTitle: "样例：",
         },
 
         ApiVerion: {
-          Title: "Schnittstellenversion (claude api version)",
-          SubTitle: "Wählen Sie eine spezifische API-Version aus",
+          Title: "接口版本 (claude api version)",
+          SubTitle: "选择一个特定的 API 版本输入",
         },
       },
       Google: {
         ApiKey: {
-          Title: "API-Schlüssel",
-          SubTitle: "Holen Sie sich Ihren API-Schlüssel von Google AI",
-          Placeholder: "Geben Sie Ihren Google AI Studio API-Schlüssel ein",
+          Title: "API 密钥",
+          SubTitle: "从 Google AI 获取您的 API 密钥",
+          Placeholder: "Google AI API KEY",
         },
 
         Endpoint: {
-          Title: "Endpunktadresse",
-          SubTitle: "Beispiel:",
+          Title: "终端地址",
+          SubTitle: "示例：",
         },
 
         ApiVersion: {
-          Title: "API-Version (nur für gemini-pro)",
-          SubTitle: "Wählen Sie eine spezifische API-Version aus",
+          Title: "API 版本（仅适用于 gemini-pro）",
+          SubTitle: "选择一个特定的 API 版本",
         },
         GoogleSafetySettings: {
-          Title: "Google Sicherheitsfilterstufe",
-          SubTitle: "Inhaltfilterstufe einstellen",
+          Title: "Google 安全过滤级别",
+          SubTitle: "设置内容过滤级别",
         },
       },
       Baidu: {
         ApiKey: {
-          Title: "API-Schlüssel",
-          SubTitle: "Verwenden Sie benutzerdefinierten Baidu API-Schlüssel",
-          Placeholder: "Baidu API-Schlüssel",
+          Title: "API Key",
+          SubTitle: "使用自定义 Baidu API Key",
+          Placeholder: "Baidu API Key",
         },
         SecretKey: {
-          Title: "Geheimschlüssel",
-          SubTitle: "Verwenden Sie benutzerdefinierten Baidu Geheimschlüssel",
-          Placeholder: "Baidu Geheimschlüssel",
+          Title: "Secret Key",
+          SubTitle: "使用自定义 Baidu Secret Key",
+          Placeholder: "Baidu Secret Key",
         },
         Endpoint: {
-          Title: "Schnittstellenadresse",
-          SubTitle:
-            "Keine benutzerdefinierten Adressen unterstützen, konfigurieren Sie in .env",
+          Title: "接口地址",
+          SubTitle: "不支持自定义前往.env配置",
+        },
+      },
+      Tencent: {
+        ApiKey: {
+          Title: "API Key",
+          SubTitle: "使用自定义腾讯云API Key",
+          Placeholder: "Tencent API Key",
+        },
+        SecretKey: {
+          Title: "Secret Key",
+          SubTitle: "使用自定义腾讯云Secret Key",
+          Placeholder: "Tencent Secret Key",
+        },
+        Endpoint: {
+          Title: "接口地址",
+          SubTitle: "不支持自定义前往.env配置",
         },
       },
       ByteDance: {
         ApiKey: {
-          Title: "Schnittstellenschlüssel",
-          SubTitle: "Verwenden Sie benutzerdefinierten ByteDance API-Schlüssel",
-          Placeholder: "ByteDance API-Schlüssel",
+          Title: "接口密钥",
+          SubTitle: "使用自定义 ByteDance API Key",
+          Placeholder: "ByteDance API Key",
         },
         Endpoint: {
-          Title: "Schnittstellenadresse",
-          SubTitle: "Beispiel:",
+          Title: "接口地址",
+          SubTitle: "样例：",
         },
       },
       Alibaba: {
         ApiKey: {
-          Title: "Schnittstellenschlüssel",
-          SubTitle:
-            "Verwenden Sie benutzerdefinierten Alibaba Cloud API-Schlüssel",
-          Placeholder: "Alibaba Cloud API-Schlüssel",
+          Title: "接口密钥",
+          SubTitle: "使用自定义阿里云API Key",
+          Placeholder: "Alibaba Cloud API Key",
         },
         Endpoint: {
-          Title: "Schnittstellenadresse",
-          SubTitle: "Beispiel:",
+          Title: "接口地址",
+          SubTitle: "样例：",
+        },
+      },
+      Moonshot: {
+        ApiKey: {
+          Title: "接口密钥",
+          SubTitle: "使用自定义月之暗面API Key",
+          Placeholder: "Moonshot API Key",
+        },
+        Endpoint: {
+          Title: "接口地址",
+          SubTitle: "样例：",
+        },
+      },
+      XAI: {
+        ApiKey: {
+          Title: "接口密钥",
+          SubTitle: "使用自定义XAI API Key",
+          Placeholder: "XAI API Key",
+        },
+        Endpoint: {
+          Title: "接口地址",
+          SubTitle: "样例：",
+        },
+      },
+      ChatGLM: {
+        ApiKey: {
+          Title: "接口密钥",
+          SubTitle: "使用自定义 ChatGLM API Key",
+          Placeholder: "ChatGLM API Key",
+        },
+        Endpoint: {
+          Title: "接口地址",
+          SubTitle: "样例：",
+        },
+      },
+      Stability: {
+        ApiKey: {
+          Title: "接口密钥",
+          SubTitle: "使用自定义 Stability API Key",
+          Placeholder: "Stability API Key",
+        },
+        Endpoint: {
+          Title: "接口地址",
+          SubTitle: "样例：",
+        },
+      },
+      Iflytek: {
+        ApiKey: {
+          Title: "ApiKey",
+          SubTitle: "从讯飞星火控制台获取的 APIKey",
+          Placeholder: "APIKey",
+        },
+        ApiSecret: {
+          Title: "ApiSecret",
+          SubTitle: "从讯飞星火控制台获取的 APISecret",
+          Placeholder: "APISecret",
+        },
+        Endpoint: {
+          Title: "接口地址",
+          SubTitle: "样例：",
         },
       },
       CustomModel: {
-        Title: "Benutzerdefinierter Modellname",
-        SubTitle:
-          "Fügen Sie benutzerdefinierte Modelloptionen hinzu, getrennt durch Kommas",
+        Title: "自定义模型名",
+        SubTitle: "增加自定义模型可选项，使用英文逗号隔开",
       },
     },
 
-    Model: "Modell",
+    Model: "模型 (model)",
     CompressModel: {
-      Title: "Kompressionsmodell",
-      SubTitle: "Modell zur Komprimierung des Verlaufs",
+      Title: "对话摘要模型",
+      SubTitle: "用于压缩历史记录、生成对话标题的模型",
     },
     Temperature: {
-      Title: "Zufälligkeit (temperature)",
-      SubTitle: "Je höher der Wert, desto zufälliger die Antwort",
+      Title: "随机性 (temperature)",
+      SubTitle: "值越大，回复越随机",
     },
     TopP: {
-      Title: "Kern-Sampling (top_p)",
-      SubTitle:
-        "Ähnlich der Zufälligkeit, aber nicht zusammen mit Zufälligkeit ändern",
+      Title: "核采样 (top_p)",
+      SubTitle: "与随机性类似，但不要和随机性一起更改",
     },
     MaxTokens: {
-      Title: "Maximale Token-Anzahl pro Antwort",
-      SubTitle: "Maximale Anzahl der Tokens pro Interaktion",
+      Title: "单次回复限制 (max_tokens)",
+      SubTitle: "单次交互所用的最大 Token 数",
     },
     PresencePenalty: {
-      Title: "Themenfrische (presence_penalty)",
-      SubTitle:
-        "Je höher der Wert, desto wahrscheinlicher wird auf neue Themen eingegangen",
+      Title: "话题新鲜度 (presence_penalty)",
+      SubTitle: "值越大，越有可能扩展到新话题",
     },
     FrequencyPenalty: {
-      Title: "Häufigkeitsstrafe (frequency_penalty)",
-      SubTitle:
-        "Je höher der Wert, desto wahrscheinlicher werden wiederholte Wörter reduziert",
+      Title: "频率惩罚度 (frequency_penalty)",
+      SubTitle: "值越大，越有可能降低重复字词",
+    },
+    TTS: {
+      Enable: {
+        Title: "启用文本转语音",
+        SubTitle: "启用文本生成语音服务",
+      },
+      Autoplay: {
+        Title: "启用自动朗读",
+        SubTitle: "自动生成语音并播放，需先开启文本转语音开关",
+      },
+      Model: "模型",
+      Engine: "转换引擎",
+      Voice: {
+        Title: "声音",
+        SubTitle: "生成语音时使用的声音",
+      },
+      Speed: {
+        Title: "速度",
+        SubTitle: "生成语音的速度",
+      },
     },
   },
   Store: {
-    DefaultTopic: "Neuer Chat",
-    BotHello: "Wie kann ich Ihnen helfen?",
-    Error:
-      "Ein Fehler ist aufgetreten, bitte versuchen Sie es später noch einmal",
+    DefaultTopic: "新的聊天",
+    BotHello: "有什么可以帮你的吗",
+    Error: "出错了，稍后重试吧",
     Prompt: {
-      History: (content: string) =>
-        "Dies ist eine Zusammenfassung des bisherigen Chats als Hintergrundinformation: " +
-        content,
+      History: (content: string) => "这是历史聊天总结作为前情提要：" + content,
       Topic:
-        "Geben Sie ein kurzes Thema in vier bis fünf Wörtern zurück, ohne Erklärungen, ohne Satzzeichen, ohne Füllwörter, ohne zusätzliche Texte und ohne Fettdruck. Wenn kein Thema vorhanden ist, geben Sie bitte „Allgemeines Gespräch“ zurück.",
+        "使用四到五个字直接返回这句话的简要主题，不要解释、不要标点、不要语气词、不要多余文本，不要加粗，如果没有主题，请直接返回“闲聊”",
       Summarize:
-        "Fassen Sie den Gesprächsinhalt zusammen, um als Kontextaufforderung für den nächsten Schritt zu dienen, halten Sie es unter 200 Zeichen",
+        "简要总结一下对话内容，用作后续的上下文提示 prompt，控制在 200 字以内",
     },
   },
   Copy: {
-    Success: "In die Zwischenablage geschrieben",
-    Failed:
-      "Kopieren fehlgeschlagen, bitte erlauben Sie Zugriff auf die Zwischenablage",
+    Success: "已写入剪贴板",
+    Failed: "复制失败，请赋予剪贴板权限",
   },
   Download: {
-    Success: "Inhalt wurde in Ihrem Verzeichnis heruntergeladen.",
-    Failed: "Download fehlgeschlagen.",
+    Success: "内容已下载到您的目录。",
+    Failed: "下载失败。",
   },
   Context: {
-    Toast: (x: any) => `Beinhaltet ${x} vordefinierte Eingabeaufforderungen`,
-    Edit: "Aktuelle Gesprächseinstellungen",
-    Add: "Neues Gespräch hinzufügen",
-    Clear: "Kontext gelöscht",
-    Revert: "Kontext wiederherstellen",
+    Toast: (x: any) => `包含 ${x} 条预设提示词`,
+    Edit: "当前对话设置",
+    Add: "新增一条对话",
+    Clear: "上下文已清除",
+    Revert: "恢复上下文",
   },
-  Plugin: {
-    Name: "Plugins",
+  Discovery: {
+    Name: "发现",
   },
   FineTuned: {
-    Sysmessage: "Du bist ein Assistent",
+    Sysmessage: "你是一个助手",
   },
   SearchChat: {
-    Name: "Suche",
+    Name: "搜索",
     Page: {
-      Title: "Chatverlauf durchsuchen",
-      Search: "Suchbegriff eingeben",
-      NoResult: "Keine Ergebnisse gefunden",
-      NoData: "Keine Daten",
-      Loading: "Laden",
+      Title: "搜索聊天记录",
+      Search: "输入搜索关键词",
+      NoResult: "没有找到结果",
+      NoData: "没有数据",
+      Loading: "加载中",
 
-      SubTitle: (count: number) => `${count} Ergebnisse gefunden`,
+      SubTitle: (count: number) => `搜索到 ${count} 条结果`,
     },
     Item: {
-      View: "Ansehen",
+      View: "查看",
+    },
+  },
+  Plugin: {
+    Name: "插件",
+    Page: {
+      Title: "插件",
+      SubTitle: (count: number) => `${count} 个插件`,
+      Search: "搜索插件",
+      Create: "新建",
+      Find: "您可以在Github上找到优秀的插件：",
+    },
+    Item: {
+      Info: (count: number) => `${count} 方法`,
+      View: "查看",
+      Edit: "编辑",
+      Delete: "删除",
+      DeleteConfirm: "确认删除？",
+    },
+    Auth: {
+      None: "不需要授权",
+      Basic: "Basic",
+      Bearer: "Bearer",
+      Custom: "自定义",
+      CustomHeader: "自定义参数名称",
+      Token: "Token",
+      Proxy: "使用代理",
+      ProxyDescription: "使用代理解决 CORS 错误",
+      Location: "位置",
+      LocationHeader: "Header",
+      LocationQuery: "Query",
+      LocationBody: "Body",
+    },
+    EditModal: {
+      Title: (readonly: boolean) => `编辑插件 ${readonly ? "（只读）" : ""}`,
+      Download: "下载",
+      Auth: "授权方式",
+      Content: "OpenAPI Schema",
+      Load: "从网页加载",
+      Method: "方法",
+      Error: "格式错误",
     },
   },
   Mask: {
-    Name: "Masken",
+    Name: "面具",
     Page: {
-      Title: "Vordefinierte Rollenmasken",
-      SubTitle: (count: number) =>
-        `${count} vordefinierte Rollenbeschreibungen`,
-      Search: "Rollenmasken suchen",
-      Create: "Neu erstellen",
+      Title: "预设角色面具",
+      SubTitle: (count: number) => `${count} 个预设角色定义`,
+      Search: "搜索角色面具",
+      Create: "新建",
     },
     Item: {
-      Info: (count: number) => `Beinhaltet ${count} vordefinierte Gespräche`,
-      Chat: "Gespräch",
-      View: "Anzeigen",
-      Edit: "Bearbeiten",
-      Delete: "Löschen",
-      DeleteConfirm: "Bestätigen Sie das Löschen?",
+      Info: (count: number) => `包含 ${count} 条预设对话`,
+      Chat: "对话",
+      View: "查看",
+      Edit: "编辑",
+      Delete: "删除",
+      DeleteConfirm: "确认删除？",
     },
     EditModal: {
       Title: (readonly: boolean) =>
-        `Vordefinierte Maske bearbeiten ${readonly ? "（Nur lesen）" : ""}`,
-      Download: "Vorgabe herunterladen",
-      Clone: "Vorgabe klonen",
+        `编辑预设面具 ${readonly ? "（只读）" : ""}`,
+      Download: "下载预设",
+      Clone: "克隆预设",
     },
     Config: {
-      Avatar: "Rollen-Avatar",
-      Name: "Rollenname",
+      Avatar: "角色头像",
+      Name: "角色名称",
       Sync: {
-        Title: "Globale Einstellungen verwenden",
-        SubTitle:
-          "Soll das aktuelle Gespräch die globalen Modelleinstellungen verwenden?",
-        Confirm:
-          "Die benutzerdefinierten Einstellungen des aktuellen Gesprächs werden automatisch überschrieben. Bestätigen Sie, dass Sie die globalen Einstellungen aktivieren möchten?",
+        Title: "使用全局设置",
+        SubTitle: "当前对话是否使用全局模型设置",
+        Confirm: "当前对话的自定义设置将会被自动覆盖，确认启用全局设置？",
       },
       HideContext: {
-        Title: "Vordefinierte Gespräche ausblenden",
-        SubTitle:
-          "Nach dem Ausblenden werden vordefinierte Gespräche nicht mehr im Chat angezeigt",
+        Title: "隐藏预设对话",
+        SubTitle: "隐藏后预设对话不会出现在聊天界面",
+      },
+      Artifacts: {
+        Title: "启用Artifacts",
+        SubTitle: "启用之后可以直接渲染HTML页面",
+      },
+      CodeFold: {
+        Title: "启用代码折叠",
+        SubTitle: "启用之后可以自动折叠/展开过长的代码块",
       },
       Share: {
-        Title: "Diese Maske teilen",
-        SubTitle: "Generieren Sie einen Direktlink zu dieser Maske",
-        Action: "Link kopieren",
+        Title: "分享此面具",
+        SubTitle: "生成此面具的直达链接",
+        Action: "复制链接",
       },
     },
   },
   NewChat: {
-    Return: "Zurück",
-    Skip: "Direkt beginnen",
-    NotShow: "Nicht mehr anzeigen",
-    ConfirmNoShow:
-      "Bestätigen Sie die Deaktivierung? Nach der Deaktivierung können Sie jederzeit in den Einstellungen wieder aktivieren.",
-    Title: "Wählen Sie eine Maske aus",
-    SubTitle:
-      "Starten Sie jetzt und lassen Sie sich von den Gedanken hinter der Maske inspirieren",
-    More: "Alle anzeigen",
+    Return: "返回",
+    Skip: "直接开始",
+    NotShow: "不再展示",
+    ConfirmNoShow: "确认禁用？禁用后可以随时在设置中重新启用。",
+    Title: "挑选一个面具",
+    SubTitle: "现在开始，与面具背后的灵魂思维碰撞",
+    More: "查看全部",
   },
 
   URLCommand: {
-    Code: "Ein Zugangscode wurde im Link gefunden. Möchten Sie diesen automatisch einfügen?",
-    Settings:
-      "Vordefinierte Einstellungen wurden im Link gefunden. Möchten Sie diese automatisch einfügen?",
+    Code: "检测到链接中已经包含访问码，是否自动填入？",
+    Settings: "检测到链接中包含了预制设置，是否自动填入？",
   },
 
   UI: {
-    Confirm: "Bestätigen",
-    Cancel: "Abbrechen",
-    Close: "Schließen",
-    Create: "Neu erstellen",
-    Edit: "Bearbeiten",
-    Export: "Exportieren",
-    Import: "Importieren",
-    Sync: "Synchronisieren",
-    Config: "Konfigurieren",
+    Confirm: "确认",
+    Cancel: "取消",
+    Close: "关闭",
+    Create: "新建",
+    Edit: "编辑",
+    Export: "导出",
+    Import: "导入",
+    Sync: "同步",
+    Config: "配置",
   },
   Exporter: {
     Description: {
-      Title: "Nur Nachrichten nach dem Löschen des Kontexts werden angezeigt",
+      Title: "只有清除上下文之后的消息会被展示",
     },
-    Model: "Modell",
-    Messages: "Nachrichten",
-    Topic: "Thema",
-    Time: "Zeit",
+    Model: "模型",
+    Messages: "消息",
+    Topic: "主题",
+    Time: "时间",
+  },
+  SdPanel: {
+    Prompt: "画面提示",
+    NegativePrompt: "否定提示",
+    PleaseInput: (name: string) => `请输入${name}`,
+    AspectRatio: "横纵比",
+    ImageStyle: "图像风格",
+    OutFormat: "输出格式",
+    AIModel: "AI模型",
+    ModelVersion: "模型版本",
+    Submit: "提交生成",
+    ParamIsRequired: (name: string) => `${name}不能为空`,
+    Styles: {
+      D3Model: "3D模型",
+      AnalogFilm: "模拟电影",
+      Anime: "动漫",
+      Cinematic: "电影风格",
+      ComicBook: "漫画书",
+      DigitalArt: "数字艺术",
+      Enhance: "增强",
+      FantasyArt: "幻想艺术",
+      Isometric: "等角",
+      LineArt: "线描",
+      LowPoly: "低多边形",
+      ModelingCompound: "建模材料",
+      NeonPunk: "霓虹朋克",
+      Origami: "折纸",
+      Photographic: "摄影",
+      PixelArt: "像素艺术",
+      TileTexture: "贴图",
+    },
+  },
+  Sd: {
+    SubTitle: (count: number) => `共 ${count} 条绘画`,
+    Actions: {
+      Params: "查看参数",
+      Copy: "复制提示词",
+      Delete: "删除",
+      Retry: "重试",
+      ReturnHome: "返回首页",
+      History: "查看历史",
+    },
+    EmptyRecord: "暂无绘画记录",
+    Status: {
+      Name: "状态",
+      Success: "成功",
+      Error: "失败",
+      Wait: "等待中",
+      Running: "运行中",
+    },
+    Danger: {
+      Delete: "确认删除？",
+    },
+    GenerateParams: "生成参数",
+    Detail: "详情",
   },
 };
 
-export default de;
+type DeepPartial<T> = T extends object
+  ? {
+      [P in keyof T]?: DeepPartial<T[P]>;
+    }
+  : T;
+
+export type LocaleType = typeof cn;
+export type PartialLocaleType = DeepPartial<typeof cn>;
+
+export default cn;
